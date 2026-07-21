@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144">
+  <rect width="144" height="144" fill="#141413"/>
+  <path d="M126 19 L127.5 27.5 L136 29 L127.5 30.5 L126 39 L124.5 30.5 L116 29 L124.5 27.5 Z" fill="#d97757"/>
+  <text x="72" y="68" text-anchor="middle" font-family="Inter,'Segoe UI',Arial,sans-serif" font-weight="700" font-size="32" fill="#faf9f5">--%</text>
+  <text x="72" y="128" text-anchor="middle" font-family="Inter,'Segoe UI',Arial,sans-serif" font-weight="600" font-size="13" letter-spacing="2" fill="#d97757">7D MODEL</text>
+</svg>

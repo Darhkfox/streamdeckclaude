@@ -7,7 +7,7 @@ import {
   type WillAppearEvent,
   type WillDisappearEvent,
 } from "@elgato/streamdeck";
-import { getUsage, invalidateUsageCache } from "../usage.js";
+import { findLimit, getUsage, invalidateUsageCache } from "../usage.js";
 import { formatPercent, formatResetsIn, renderError, renderKey, renderLoading } from "../render.js";
 import { openSettings } from "../open-settings.js";
 
@@ -50,17 +50,19 @@ export class CurrentSessionAction extends SingletonAction<Settings> {
       await action.setImage(renderError("SESSION"));
       return;
     }
-    const bucket = r.data.five_hour;
-    if (!bucket || typeof bucket.utilization !== "number") {
+    const entry = findLimit(r.data, "session");
+    const percent = entry?.percent ?? r.data.five_hour?.utilization;
+    const resetsAt = entry?.resets_at ?? r.data.five_hour?.resets_at;
+    if (typeof percent !== "number") {
       await action.setImage(renderError("SESSION"));
       return;
     }
     await action.setImage(
       renderKey({
-        big: formatPercent(bucket.utilization),
+        big: formatPercent(percent),
         label: "SESSION",
-        subtitle: formatResetsIn(bucket.resets_at),
-        accent: bucket.utilization > 80,
+        subtitle: formatResetsIn(resetsAt),
+        accent: percent > 80,
       })
     );
   }

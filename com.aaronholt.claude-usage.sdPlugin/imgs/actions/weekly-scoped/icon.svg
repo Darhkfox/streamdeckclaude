@@ -3,5 +3,4 @@
   <rect x="6.5" y="9" width="3" height="9" fill="#d97757" opacity="0.35"/>
   <rect x="11" y="6" width="3" height="12" fill="#d97757"/>
   <rect x="15.5" y="3" width="3" height="15" fill="#d97757" opacity="0.35"/>
-  <text x="10" y="2" text-anchor="middle" font-family="Inter,'Segoe UI',Arial,sans-serif" font-weight="800" font-size="3" fill="#141413">S</text>
 </svg>

@@ -7,7 +7,7 @@ import {
   type WillAppearEvent,
   type WillDisappearEvent,
 } from "@elgato/streamdeck";
-import { getUsage, invalidateUsageCache } from "../usage.js";
+import { findLimit, getUsage, invalidateUsageCache } from "../usage.js";
 import { formatPercent, formatResetsIn, renderError, renderKey, renderLoading } from "../render.js";
 import { openSettings } from "../open-settings.js";
 
@@ -47,17 +47,19 @@ export class WeeklyAllAction extends SingletonAction<Settings> {
       await action.setImage(renderError("7D ALL"));
       return;
     }
-    const bucket = r.data.seven_day;
-    if (!bucket || typeof bucket.utilization !== "number") {
+    const entry = findLimit(r.data, "weekly_all");
+    const percent = entry?.percent ?? r.data.seven_day?.utilization;
+    const resetsAt = entry?.resets_at ?? r.data.seven_day?.resets_at;
+    if (typeof percent !== "number") {
       await action.setImage(renderError("7D ALL"));
       return;
     }
     await action.setImage(
       renderKey({
-        big: formatPercent(bucket.utilization),
+        big: formatPercent(percent),
         label: "7D ALL",
-        subtitle: formatResetsIn(bucket.resets_at),
-        accent: bucket.utilization > 80,
+        subtitle: formatResetsIn(resetsAt),
+        accent: percent > 80,
       })
     );
   }

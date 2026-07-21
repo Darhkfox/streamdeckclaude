@@ -1,8 +1,8 @@
 {
   "Name": "Claude Usage",
-  "Version": "1.0.1.0",
+  "Version": "1.1.0.0",
   "Author": "Aaron Holt",
-  "Description": "Live Claude Code usage on three keys: current 5-hour session percent, weekly all-models cost, and weekly Sonnet cost.",
+  "Description": "Live Claude usage on four keys: current 5-hour session, weekly all-models, weekly scoped-model (auto-labelled), and monthly extra credits.",
   "Icon": "imgs/plugin/marketplace",
   "Category": "Claude Usage",
   "CategoryIcon": "imgs/plugin/category",
@@ -62,34 +62,17 @@
       ]
     },
     {
-      "Name": "Weekly (Sonnet)",
-      "UUID": "com.aaronholt.claude-usage.weekly-sonnet",
-      "Icon": "imgs/actions/weekly-sonnet/icon",
-      "Tooltip": "Percent of your weekly Sonnet limit consumed.",
+      "Name": "Weekly (Scoped Model)",
+      "UUID": "com.aaronholt.claude-usage.weekly-scoped",
+      "Icon": "imgs/actions/weekly-scoped/icon",
+      "Tooltip": "Percent of your weekly limit for the model Anthropic scopes your account to (auto-labelled — Fable, Sonnet, etc).",
       "Controllers": [
         "Keypad"
       ],
       "SupportedInMultiActions": false,
       "States": [
         {
-          "Image": "imgs/actions/weekly-sonnet/key",
-          "TitleAlignment": "middle",
-          "ShowTitle": false
-        }
-      ]
-    },
-    {
-      "Name": "Weekly (Claude Design)",
-      "UUID": "com.aaronholt.claude-usage.claude-design",
-      "Icon": "imgs/actions/claude-design/icon",
-      "Tooltip": "Percent of your weekly Claude Design limit consumed.",
-      "Controllers": [
-        "Keypad"
-      ],
-      "SupportedInMultiActions": false,
-      "States": [
-        {
-          "Image": "imgs/actions/claude-design/key",
+          "Image": "imgs/actions/weekly-scoped/key",
           "TitleAlignment": "middle",
           "ShowTitle": false
         }

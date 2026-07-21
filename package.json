@@ -1,6 +1,6 @@
 {
   "name": "com.aaronholt.claude-usage",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Live Claude Code usage on three Stream Deck keys.",
   "main": "com.aaronholt.claude-usage.sdPlugin/bin/plugin.js",
   "type": "module",

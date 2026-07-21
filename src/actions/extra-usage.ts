@@ -54,7 +54,14 @@ export class ExtraUsageAction extends SingletonAction<Settings> {
       return;
     }
     const e = r.data.extra_usage;
-    if (!e || !e.is_enabled) {
+    if (
+      !e ||
+      !e.is_enabled ||
+      typeof e.utilization !== "number" ||
+      typeof e.used_credits !== "number" ||
+      typeof e.monthly_limit !== "number" ||
+      !e.currency
+    ) {
       await action.setImage(
         renderKey({ big: "off", label: "EXTRA", subtitle: "not enabled" })
       );

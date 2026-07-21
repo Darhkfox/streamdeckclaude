@@ -21,22 +21,60 @@ const SLEEP_GAP_MS = 30 * 60_000;
 
 type Bucket = { utilization: number; resets_at: string | null } | null;
 
+export type LimitKind = "session" | "weekly_all" | "weekly_scoped";
+
+export type LimitEntry = {
+  kind: LimitKind | string;
+  group?: string;
+  percent: number;
+  severity?: string;
+  resets_at: string | null;
+  scope?: {
+    model?: { id: string | null; display_name: string | null } | null;
+    surface?: string | null;
+  } | null;
+  is_active?: boolean;
+};
+
+export type Spend = {
+  used?: { amount_minor: number; currency: string; exponent: number } | null;
+  limit?: { amount_minor: number; currency: string; exponent: number } | null;
+  percent?: number | null;
+  enabled?: boolean;
+  disabled_reason?: string | null;
+} | null;
+
 export type ExtraUsage = {
   is_enabled: boolean;
-  monthly_limit: number;
-  used_credits: number;
-  utilization: number;
-  currency: string;
+  monthly_limit: number | null;
+  used_credits: number | null;
+  utilization: number | null;
+  currency: string | null;
+  decimal_places?: number | null;
 } | null;
 
 export type UsageResponse = {
+  // Legacy top-level buckets. Session and weekly-all still populate; per-model
+  // buckets (sonnet/opus/omelette) are now always null and superseded by
+  // `limits[]` entries with kind: "weekly_scoped".
   five_hour: Bucket;
   seven_day: Bucket;
-  seven_day_sonnet: Bucket;
-  seven_day_opus: Bucket;
-  seven_day_omelette: Bucket;
-  extra_usage: ExtraUsage;
+  seven_day_sonnet?: Bucket;
+  seven_day_opus?: Bucket;
+  seven_day_omelette?: Bucket;
+  // New unified shape — one entry per active limit, self-describing.
+  limits?: LimitEntry[];
+  // Replaces extra_usage for spend/pay-as-you-go credit info.
+  spend?: Spend;
+  extra_usage?: ExtraUsage;
 };
+
+export function findLimit(
+  data: UsageResponse,
+  kind: LimitKind
+): LimitEntry | undefined {
+  return data.limits?.find((l) => l.kind === kind);
+}
 
 type Credentials = {
   claudeAiOauth: {
